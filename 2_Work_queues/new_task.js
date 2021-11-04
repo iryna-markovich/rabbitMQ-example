@@ -1,3 +1,13 @@
+// https://www.rabbitmq.com/tutorials/tutorial-two-javascript.html
+
+// in terminal run these scripts with different args
+// --> node new_task.js task_1
+// --> node new_task.js task_2
+
+// to fake complexity of the tasks we will use dots, so ... - it takes 3 seconds to done
+// --> node new_task.js task_3...
+// --> node new_task.js task_4..........
+
 const amqp = require('amqplib/callback_api')
 
 amqp.connect('amqp://localhost', (error0, connection) => {
@@ -23,7 +33,7 @@ amqp.connect('amqp://localhost', (error0, connection) => {
 
     console.log(" [x] Sent '%s'", msg)
 
-    setTimeout(function () {
+    setTimeout(() => {
       connection.close()
       process.exit(0)
     }, 500)

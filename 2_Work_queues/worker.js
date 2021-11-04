@@ -1,3 +1,12 @@
+// https://www.rabbitmq.com/tutorials/tutorial-two-javascript.html
+
+// in terminal run script
+// --> node worker.js
+
+// open new terminal (or more) and run script in each terminal
+// and sent some tasks to see how it will be shared between workers.
+// --> node worker.js
+
 const amqp = require('amqplib/callback_api')
 
 amqp.connect('amqp://localhost', (error0, connection) => {
@@ -24,7 +33,7 @@ amqp.connect('amqp://localhost', (error0, connection) => {
       queue,
       (msg) => {
         const secs = msg.content.toString().split('.').length - 1
-        
+
         console.log(' [x] Received %s', msg.content.toString())
 
         setTimeout(() => {

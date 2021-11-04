@@ -1,3 +1,11 @@
+// https://www.rabbitmq.com/tutorials/tutorial-three-javascript.html
+
+// in terminal run script
+// --> node emit_log.js
+
+// to see and save logs to a file
+// --> node receive_logs.js > logs_from_rabbit.log
+
 const amqp = require('amqplib/callback_api')
 
 amqp.connect('amqp://localhost', (error0, connection) => {
@@ -17,8 +25,8 @@ amqp.connect('amqp://localhost', (error0, connection) => {
       durable: false,
     })
 
-    channel.publish(exchange, '', Buffer.from(msg))
-    console.log(' [x] Sent %s', msg)
+    channel.publish(exchange, '', Buffer.from(msg))   //  <-- the empty string as second parameter means that 
+    console.log(' [x] Sent %s', msg)                  //  <-- we don't want to send the message to any specific queue
   })
 
   setTimeout(() => {

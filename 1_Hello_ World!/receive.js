@@ -1,3 +1,8 @@
+// https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html
+
+// in terminal run script
+// --> node receive.js
+
 const amqp = require('amqplib/callback_api')
 
 amqp.connect('amqp://localhost', (error0, connection) => {
