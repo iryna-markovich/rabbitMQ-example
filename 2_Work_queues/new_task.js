@@ -24,12 +24,14 @@ amqp.connect('amqp://localhost', (error0, connection) => {
     const msg = process.argv.slice(2).join(' ') || 'Hello World!'
 
     channel.assertQueue(queue, {
-      durable: true,
-    })
+      durable: true,                 // <-- make sure that the queue will survive a RabbitMQ node restart.
+    })                               // <-- you cant redefine queue as durable, if it was not durable previosly
 
     channel.sendToQueue(queue, Buffer.from(msg), {
-      persistent: true,
-    })
+      persistent: true,              // <-- marking messages as persistent doesn't fully guarantee that a message
+    })                               // <-- won't be lost. Although it tells RabbitMQ to save the message to disk,
+                                     // <-- there is still a short time window when RabbitMQ has accepted a message
+                                     // <-- and hasn't saved it yet
 
     console.log(" [x] Sent '%s'", msg)
 

@@ -22,10 +22,12 @@ amqp.connect('amqp://localhost', (error0, connection) => {
     const queue = 'task_queue'
 
     channel.assertQueue(queue, {
-      durable: true,
-    })
+      durable: true,      // <-- make sure that the queue will survive a RabbitMQ node restart.
+    })                    // <-- you cant redefine queue as durable, if it was not durable previosly
 
-    channel.prefetch(1);
+    channel.prefetch(1);  // <-- this tells RabbitMQ not to give more than one message to a worker at a time. 
+                          // <-- Or, in other words, don't dispatch a new message to a worker until it has 
+                          // <-- processed and acknowledged the previous one. 
 
     console.log(' [*] Waiting for messages in %s. To exit press CTRL+C', queue)
 
@@ -41,8 +43,8 @@ amqp.connect('amqp://localhost', (error0, connection) => {
         }, secs * 1000)
       },
       {
-        noAck: true,
-      }
-    )
+        noAck: true,     // <-- using this code we can be sure that even if you kill a worker using CTRL+C while
+      }                  // <-- it was processing a message, nothing will be lost. Soon after the worker dies 
+    )                    // <-- all unacknowledged messages will be redelivered.
   })
 })

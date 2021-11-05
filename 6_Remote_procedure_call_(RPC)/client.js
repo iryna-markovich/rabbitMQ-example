@@ -1,5 +1,8 @@
 // https://www.rabbitmq.com/tutorials/tutorial-six-javascript.html
 
+// in terminal run script with number arg
+// --> node client.js 30
+
 const amqp = require('amqplib/callback_api')
 const args = process.argv.slice(2)
 
