@@ -40,6 +40,7 @@ amqp.connect('amqp://localhost', (error0, connection) => {
 
         setTimeout(() => {
           console.log(' [x] Done')
+          channel.ack(msg)
         }, secs * 1000)
       },
       {
